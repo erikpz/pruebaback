@@ -31,14 +31,14 @@ class MiniServer {
             res.json({factores: factoresPrimos(req.params.num)});
         });
         this.app.get('/station/:id',  (req, res) => {
-            this.dbconnection.query(`SELECT * FROM stations WHERE cre_id = "PL/${req.params.id}/EXP/ES/2015"`, function(err, rows) {
+            this.dbconnection.query(`SELECT s.name, sc.distance, p.value, sb.id_brand, b.name FROM stations s JOIN stations_competitors sc ON s.cre_id = sc.cre_id JOIN prices p ON s.cre_id = p.cre_id JOIN stations_brands sb ON s.cre_id = sb.cre_id JOIN brands b ON sb.id_brand = b.id WHERE s.cre_id = "PL/${req.params.id}/EXP/ES/2015"`, function(err, rows) {
                 if (err) {
                   console.error('Error al realizar la consulta: ' + err.stack);
                   res.json({result:null})
                   return;
                 }
                 console.log('Resultado de la consulta: ', rows);
-                res.json({name: rows[0].name})
+                res.json({name: rows})
               });
         });
     }
