@@ -9,4 +9,4 @@ const factoresPrimos = num => {
     return factores;
 }
 
-console.log(factoresPrimos(84))
+module.exports = {factoresPrimos};

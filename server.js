@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const { connection } = require('./connection-db');
+const { factoresPrimos } = require('./primos');
 
 class MiniServer {
     constructor(){
@@ -26,8 +27,8 @@ class MiniServer {
     }
 
     routes(){
-        this.app.get('/', (req, res) => {
-            res.send('Hello World!');
+        this.app.get('/factorPrimo/:num', (req, res) => {
+            res.json({factores: factoresPrimos(req.params.num)});
         });
         this.app.get('/station/:id',  (req, res) => {
             this.dbconnection.query(`SELECT * FROM stations WHERE cre_id = "PL/${req.params.id}/EXP/ES/2015"`, function(err, rows) {
